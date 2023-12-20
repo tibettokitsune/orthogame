@@ -59,7 +59,7 @@ public class Antigravity : MonoBehaviour
             {
                 objectOfGravity.InSphere = isActive;
 
-                print($"{objectOfGravity.name} ---> {isActive} ");
+                // print($"{objectOfGravity.name} ---> {isActive} ");
             }
         }
     }
