@@ -1,3 +1,4 @@
+using Infrastructure;
 using UnityEngine;
 using UnityHFSM;
 
@@ -5,17 +6,20 @@ namespace Game.Scripts.Metagameplay.Player
 {
     public class SimpleMovementState : State
     {
-
-        public override void OnEnter()
+        private MoveAndRotation _moveAndRotation;
+        private IPlayerInput _input;
+        public SimpleMovementState(IPlayerInput input ,MoveAndRotation moveAndRotation)
         {
-            base.OnEnter();
-            Debug.Log("OnEnter");
+            _moveAndRotation = moveAndRotation;
+            _input = input;
         }
 
-        public override void OnExit()
+        public override void OnLogic()
         {
-            base.OnExit();
-            Debug.Log("OnExit");
+            if(_input.JumpPressed()) _moveAndRotation.Jump();
+            
+            _moveAndRotation.CalculateMovementDirection(
+                new Vector3(_input.Horizontal(), _input.Height(), _input.Vertical()));
         }
     }
 }

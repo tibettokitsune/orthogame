@@ -1,57 +1,45 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Scripts.Metagameplay.Player;
 using Infrastructure;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MoveAndRotation : MonoBehaviour
 {
-    public bool IsGround { set => isGround = value; get => isGround; }
+    public bool IsGround { set => _isGround = value; get => _isGround; }
 
-    [Inject] private IPlayerInput _playerInput;
-    
-    [Range(1, 10)] public float MaxVelocity;
-    [Range(1, 1000)] public float Acceleration;
-    [Range(1, 1000)] public float ForceGravity;
-    [Range(1, 1000)] public float CoefMoveInAntigravity;
-    
-    [SerializeField] private GroundCheker GroundCheker;
-    [SerializeField] private Vector3 _direction;
-    [SerializeField] private bool isGround;
-    [SerializeField] private ObjectOfGravity currentObjectOfGravity;
-
-    [SerializeField] private Rigidbody rigidbody;
+    // [Inject] private IPlayerInput _playerInput;
+    [Inject] private PlayerConfiguration _configuration;
+    [Inject] private GroundCheker _groundChecker;
+    [Inject] private ObjectOfGravity _currentObjectOfGravity;
+    [Inject] private Rigidbody _rigidbody;
+    private Vector3 _direction;
+    private bool _isGround;
     private Transform _cameraTransform;
-    private void OnValidate()
-    {
-        if (!currentObjectOfGravity) currentObjectOfGravity = GetComponent<ObjectOfGravity>();
-        if (!GroundCheker) GroundCheker = GetComponentInChildren<GroundCheker>();
-        if(!rigidbody) rigidbody = GetComponent<Rigidbody>();
-    }
-
-    private void Initialize()
-    {
-        GroundCheker.OnGround += SetIsGround;
-        _cameraTransform = Camera.main.transform;
-    }
 
     private void OnDestroy()
     {
-        GroundCheker.OnGround -= SetIsGround;
+        _groundChecker.OnGround -= SetIsGround;
     }
 
-    private void Start() => Initialize();
-
-    private void Update()
+    private void Start()
     {
-        if(_playerInput.JumpPressed()) Jump();
-
-        CalculateMovementDirection();
+        _groundChecker.OnGround += SetIsGround;
+        _cameraTransform = Camera.main.transform;
     }
 
-    private void CalculateMovementDirection()
+    // private void Update()
+    // {
+    //     if(_playerInput.JumpPressed()) Jump();
+    //
+    //     CalculateMovementDirection();
+    // }
+
+    public void CalculateMovementDirection(Vector3 direction)
     {
         var forward = _cameraTransform.forward;
         forward.y = 0;
@@ -62,9 +50,22 @@ public class MoveAndRotation : MonoBehaviour
         right = right.normalized;
 
         var top = Vector3.up;
-        _direction = (forward * _playerInput.Vertical()
-                      + right * _playerInput.Horizontal()
-                      + top * _playerInput.Height());
+        // _direction = (forward * _playerInput.Vertical()
+        //               + right * _playerInput.Horizontal()
+        //               + top * _playerInput.Height());
+        
+        _direction = (forward * direction.z
+                      + right * direction.x
+                      + top * direction.y);
+    }
+    
+    public void Jump()
+    {
+        if (_currentObjectOfGravity.InSphere) return;
+        if (_isGround)
+        {
+            _rigidbody.AddForce(_direction.normalized + Vector3.up * 200, ForceMode.Impulse);
+        }
     }
 
     private void FixedUpdate()
@@ -79,51 +80,42 @@ public class MoveAndRotation : MonoBehaviour
     {
         var tDirection = new Vector3(_direction.x, 0, _direction.z);
 
-        if (currentObjectOfGravity.InSphere)
+        if (_currentObjectOfGravity.InSphere)
         {
-            Vector3 direction = tDirection.normalized * Acceleration - rigidbody.velocity * 10;
-            direction = direction / CoefMoveInAntigravity;
+            Vector3 direction = tDirection.normalized * _configuration.acceleration - _rigidbody.velocity * 10;
+            direction = direction / _configuration.antigravityMovementCoefficient;
 
-            rigidbody.AddForce(direction);
+            _rigidbody.AddForce(direction);
         }
         else
-            rigidbody.AddForce(tDirection.normalized * Acceleration - rigidbody.velocity * 10, ForceMode.Force);
+            _rigidbody.AddForce(tDirection.normalized * _configuration.acceleration - _rigidbody.velocity * 10, ForceMode.Force);
 
         var top = _direction.y;
 
-        if (currentObjectOfGravity.VerticalPosition < 1) top = 1;
-        currentObjectOfGravity.VerticalPosition += Time.deltaTime * top;
+        if (_currentObjectOfGravity.VerticalPosition < 1) top = 1;
+        _currentObjectOfGravity.VerticalPosition += Time.deltaTime * top;
     }
 
     private void Gravity() {
-            if(currentObjectOfGravity.InSphere == false)
-                rigidbody.AddForce(Vector3.down * ForceGravity, ForceMode.Force);
+            if(_currentObjectOfGravity.InSphere == false)
+                _rigidbody.AddForce(Vector3.down * _configuration.forceGravity, ForceMode.Force);
     }
 
     private void SpeedLimit()
     {
-        if (rigidbody.velocity.magnitude >= MaxVelocity)
+        if (_rigidbody.velocity.magnitude >= _configuration.maxVelocity)
         {
-            rigidbody.velocity = rigidbody.velocity.normalized * MaxVelocity;
+            _rigidbody.velocity = _rigidbody.velocity.normalized * _configuration.maxVelocity;
         }
     }
 
     private void SetIsGround(bool value) {
-        isGround = value;
-    }
-    private void Jump()
-    {
-        if (currentObjectOfGravity.InSphere) return;
-        if (isGround)
-        {
-            rigidbody.AddForce(_direction.normalized + Vector3.up * 200, ForceMode.Impulse);
-        }
+        _isGround = value;
     }
 
     private void Rotation()
     {
         if (_direction == Vector3.zero) return;
-        Debug.DrawRay(transform.position, _direction *10);
         transform.forward = Vector3.Slerp(transform.forward, _direction, 10 * Time.deltaTime);
     }
 }
