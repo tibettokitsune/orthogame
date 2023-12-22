@@ -15,7 +15,7 @@ namespace Game.Scripts.Metagameplay.Player
         {
             _fsm = new StateMachine();
             _fsm.AddState("SimpleMovement",new SimpleMovementState(_playerInput, _moveAndRotation));
-            _fsm.AddState("AntigravityMovement",new AntigravityMovement(_playerInput, _moveAndRotation));
+            _fsm.AddState("AntigravityMovement",new AntigravityMovementState(_playerInput, _moveAndRotation));
 
             _fsm.AddTransition(new Transition("SimpleMovement", "AntigravityMovement", 
                 t => _playerInput.RPressed()));

@@ -4,11 +4,11 @@ using UnityHFSM;
 
 namespace Game.Scripts.Metagameplay.Player
 {
-    public class AntigravityMovement : State
+    public class AntigravityMovementState : State
     {
         private MoveAndRotation _moveAndRotation;
         private IPlayerInput _input;
-        public AntigravityMovement(IPlayerInput input ,MoveAndRotation moveAndRotation)
+        public AntigravityMovementState(IPlayerInput input ,MoveAndRotation moveAndRotation)
         {
             _moveAndRotation = moveAndRotation;
             _input = input;

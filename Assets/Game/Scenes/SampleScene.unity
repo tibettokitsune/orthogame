@@ -2349,7 +2349,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530294264}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d029bdabb22c8914f9b5938676a64739, type: 3}
   m_Name: 
@@ -3618,7 +3618,7 @@ PrefabInstance:
     - target: {fileID: 3277039208432102996, guid: 0ec3d1bac2ec662448bc34b581c24cf2, type: 3}
       propertyPath: GroundCheker
       value: 
-      objectReference: {fileID: 801759801}
+      objectReference: {fileID: 0}
     - target: {fileID: 3277039208432102996, guid: 0ec3d1bac2ec662448bc34b581c24cf2, type: 3}
       propertyPath: CoefMoveInAntigravity
       value: 10
@@ -3626,7 +3626,7 @@ PrefabInstance:
     - target: {fileID: 3277039208432102996, guid: 0ec3d1bac2ec662448bc34b581c24cf2, type: 3}
       propertyPath: currentObjectOfGravity
       value: 
-      objectReference: {fileID: 1530294278}
+      objectReference: {fileID: 0}
     - target: {fileID: 3277039208432103001, guid: 0ec3d1bac2ec662448bc34b581c24cf2, type: 3}
       propertyPath: m_RootOrder
       value: 8
