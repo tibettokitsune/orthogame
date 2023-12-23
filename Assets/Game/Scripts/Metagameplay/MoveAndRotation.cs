@@ -116,6 +116,7 @@ public class MoveAndRotation : MonoBehaviour
     private void Rotation()
     {
         if (_direction == Vector3.zero) return;
-        transform.forward = Vector3.Slerp(transform.forward, _direction, 10 * Time.deltaTime);
+        var xzDirection = new Vector3(_direction.x, 0, _direction.z);
+        transform.forward = Vector3.Slerp(transform.forward, xzDirection, 10 * Time.deltaTime);
     }
 }
