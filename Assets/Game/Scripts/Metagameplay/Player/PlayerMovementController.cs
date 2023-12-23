@@ -11,12 +11,14 @@ namespace Game.Scripts.Metagameplay.Player
         [Inject] private IPlayerInput _playerInput;
         [Inject] private MoveAndRotation _moveAndRotation;
         [Inject] private Antigravity _antigravity;
+        [Inject] private CharacterAnimationController _animationController;
+        [Inject] private GroundChecker _groundChecker;
         private StateMachine _fsm;
         private void Start()
         {
             _fsm = new StateMachine();
-            _fsm.AddState("SimpleMovement",new SimpleMovementState(_playerInput, _moveAndRotation));
-            _fsm.AddState("AntigravityMovement",new AntigravityMovementState(_playerInput, _moveAndRotation, _antigravity));
+            _fsm.AddState("SimpleMovement",new SimpleMovementState(_playerInput, _moveAndRotation, _animationController, _groundChecker));
+            _fsm.AddState("AntigravityMovement",new AntigravityMovementState(_playerInput, _moveAndRotation, _antigravity, _animationController));
 
             _fsm.AddTransition(new Transition("SimpleMovement", "AntigravityMovement", 
                 t => _playerInput.RPressed()));

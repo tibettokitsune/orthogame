@@ -14,7 +14,7 @@ public class MoveAndRotation : MonoBehaviour
 
     // [Inject] private IPlayerInput _playerInput;
     [Inject] private PlayerConfiguration _configuration;
-    [Inject] private GroundCheker _groundChecker;
+    [Inject] private GroundChecker _groundChecker;
     [Inject] private ObjectOfGravity _currentObjectOfGravity;
     [Inject] private Rigidbody _rigidbody;
     private Vector3 _direction;
