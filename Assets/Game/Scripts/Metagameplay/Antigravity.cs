@@ -5,7 +5,6 @@ using Zenject;
 
 public class Antigravity : MonoBehaviour
 {
-    [Inject] private IPlayerInput _playerInput;
     [SerializeField] List<ObjectOfGravity> _antigravityList = new List<ObjectOfGravity>();
     [SerializeField] public bool IsAntigravity;// { private set; get; }
     public GameObject _SphereGravty;
@@ -14,11 +13,6 @@ public class Antigravity : MonoBehaviour
     {
         _SphereGravty = Instantiate(_SphereGravty);
         _SphereGravty.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if(_playerInput.RPressed()) SetGravity();
     }
 
     public void AddObject(ObjectOfGravity objectOfGravity)
@@ -63,4 +57,7 @@ public class Antigravity : MonoBehaviour
             }
         }
     }
+
+    public bool IsObjectInAntigravityZone(Vector3 pos) 
+        =>  Vector3.Distance(_SphereGravty.transform.position, pos) <= _SphereGravty.transform.lossyScale.x/2;
 }
