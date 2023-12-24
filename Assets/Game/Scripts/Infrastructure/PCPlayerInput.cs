@@ -14,6 +14,6 @@ namespace Infrastructure
         public bool EPressed() => Input.GetKeyDown(KeyCode.E);
 
         public bool JumpPressed() => Input.GetKeyDown(KeyCode.Space);
-
+        public bool AttackPressed() => Input.GetMouseButton(0);
     }
 }

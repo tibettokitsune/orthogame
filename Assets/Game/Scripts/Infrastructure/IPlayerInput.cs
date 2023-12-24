@@ -11,5 +11,7 @@ namespace Infrastructure
         bool RPressed();
         bool EPressed();
         bool JumpPressed();
+
+        bool AttackPressed();
     }
 }

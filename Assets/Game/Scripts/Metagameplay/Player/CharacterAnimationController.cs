@@ -6,7 +6,8 @@ namespace Game.Scripts.Metagameplay.Player
     public enum CharacterAnimationLayer
     {
         Default = 0,
-        Fly = 1
+        Fly = 1,
+        Combat = 2
     }
     public class CharacterAnimationController : MonoBehaviour
     {
@@ -14,7 +15,10 @@ namespace Game.Scripts.Metagameplay.Player
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int Power = Animator.StringToHash("Power");
         private static readonly int OnGround = Animator.StringToHash("OnGround");
+        private static readonly int CombatNumber = Animator.StringToHash("CombatNumber");
+        private static readonly int Punch = Animator.StringToHash("Punch");
 
+        
         private void OnValidate()
         {
             if (!_animator) _animator = GetComponent<Animator>();
@@ -26,9 +30,10 @@ namespace Game.Scripts.Metagameplay.Player
 
         public void HeroPower() => _animator.SetTrigger(Power);
 
-        public void DisableHeroPower()
+        public void PunchAnimation(int combatNumber)
         {
-            throw new System.NotImplementedException();
+            _animator.SetFloat(CombatNumber, combatNumber);
+            _animator.SetTrigger(Punch);
         }
 
         public void SetLayerWeight(CharacterAnimationLayer currentLayer, float p1)

@@ -23,9 +23,8 @@ namespace Game.Scripts.Metagameplay.Player
             _fsm.AddTransition(new Transition("SimpleMovement", "AntigravityMovement", 
                 t => _playerInput.RPressed()));
             _fsm.AddTransition(new Transition( "AntigravityMovement","SimpleMovement", 
-                t => _playerInput.RPressed()));
-            _fsm.AddTransition(new Transition( "AntigravityMovement","SimpleMovement", 
-                t => !_antigravity.IsObjectInAntigravityZone(transform.position)));
+                t => _playerInput.RPressed() 
+                     || !_antigravity.IsObjectInAntigravityZone(transform.position)));
 
             _fsm.SetStartState("SimpleMovement");
             _fsm.Init();

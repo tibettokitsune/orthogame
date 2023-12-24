@@ -1,3 +1,4 @@
+using Game.Scripts.Metagameplay.CombatSystem;
 using Game.Scripts.Metagameplay.Player;
 using UnityEngine;
 using Zenject;
@@ -14,6 +15,8 @@ namespace Installers
             Container.Bind<Animator>().FromComponentInChildren().AsSingle();
             Container.Bind<CharacterAnimationController>().FromComponentInChildren().AsSingle();
             Container.Bind<MoveAndRotation>().FromComponentOn(gameObject).AsSingle();
+
+            Container.Bind<DamagePoint>().FromComponentsInChildren().AsSingle();
         }
     }
 }
