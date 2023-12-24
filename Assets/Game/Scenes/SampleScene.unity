@@ -1924,6 +1924,7 @@ GameObject:
   - component: {fileID: 1238666757}
   - component: {fileID: 1238666756}
   - component: {fileID: 1238666755}
+  - component: {fileID: 1238666758}
   m_Layer: 5
   m_Name: BarsPanel
   m_TagString: Untagged
@@ -2013,6 +2014,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1238666758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238666753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef27a75ae88423c98666719845c589e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitHpBarPrefab: {fileID: 7658775568636199732, guid: 393fb161c0e8344e1bb3159f024258f0, type: 3}
 --- !u!1 &1297144908
 GameObject:
   m_ObjectHideFlags: 0
