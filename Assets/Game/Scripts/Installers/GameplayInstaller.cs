@@ -1,3 +1,4 @@
+using Game.Scripts.UI;
 using Infrastructure;
 using UnityEngine;
 using Zenject;
@@ -13,6 +14,8 @@ namespace Installers
 #endif
 
             Container.Bind<Antigravity>().FromComponentInHierarchy().AsSingle();
+
+            Container.Bind<BarsPanelController>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

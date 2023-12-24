@@ -60,4 +60,6 @@ public class Antigravity : MonoBehaviour
 
     public bool IsObjectInAntigravityZone(Vector3 pos) 
         =>  Vector3.Distance(_SphereGravty.transform.position, pos) <= _SphereGravty.transform.lossyScale.x/2;
+
+    public bool IsActiveField() => _SphereGravty.activeSelf;
 }
