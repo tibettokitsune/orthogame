@@ -16,6 +16,7 @@ namespace Installers
             Container.Bind<CharacterAnimationController>().FromComponentInChildren().AsSingle();
             Container.Bind<MoveAndRotation>().FromComponentOn(gameObject).AsSingle();
 
+            Container.Bind<ICanBeDamaged>().To<DamageUnit>().FromComponentOn(gameObject).AsSingle();
             Container.Bind<DamagePoint>().FromComponentsInChildren().AsSingle();
         }
     }

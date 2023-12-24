@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Scripts.Metagameplay.CombatSystem
 {
@@ -10,6 +11,7 @@ namespace Game.Scripts.Metagameplay.CombatSystem
     }
     public class DamagePoint : MonoBehaviour
     {
+        [Inject] private ICanBeDamaged _owner;
         public DamagePointsType pointType;
         private List<ICanBeDamaged> _damagedElements = new List<ICanBeDamaged>();
         private bool _isActive;
@@ -18,7 +20,10 @@ namespace Game.Scripts.Metagameplay.CombatSystem
         public void UpdateState(bool state)
         {
             _isActive = state;
-            if (!_isActive) _damagedElements = new List<ICanBeDamaged>();
+            if (!_isActive)
+            {
+                _damagedElements = new List<ICanBeDamaged>();
+            }
         }
 
         public void UpdateDamageValue(float value) => _damage = value;
@@ -28,13 +33,12 @@ namespace Game.Scripts.Metagameplay.CombatSystem
             if(!_isActive) return;
 
             var dmg = other.GetComponent<ICanBeDamaged>();
-            if (dmg != null)
-            {
-                if(_damagedElements.Contains(dmg)) return;
+            if (dmg == null) return;
+            if(dmg.ID == _owner.ID) return;
+            if(_damagedElements.Contains(dmg)) return;
                     
-                dmg.GetDamage(_damage);
-                _damagedElements.Add(dmg);
-            }
+            dmg.GetDamage(_damage);
+            _damagedElements.Add(dmg);
         }
     }
 }
