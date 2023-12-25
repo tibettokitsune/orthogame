@@ -12,7 +12,7 @@ public class MoveAndRotation : MonoBehaviour
 {
     public bool IsGround { set => _isGround = value; get => _isGround; }
 
-    // [Inject] private IPlayerInput _playerInput;
+    [Inject] private IPlayerInput _playerInput;
     [Inject] private PlayerConfiguration _configuration;
     [Inject] private GroundChecker _groundChecker;
     [Inject] private ObjectOfGravity _currentObjectOfGravity;
@@ -21,6 +21,7 @@ public class MoveAndRotation : MonoBehaviour
     private bool _isGround;
     private Transform _cameraTransform;
 
+    public float Horizontal, Vertical;
     private void OnDestroy()
     {
         _groundChecker.OnGround -= SetIsGround;
@@ -31,13 +32,6 @@ public class MoveAndRotation : MonoBehaviour
         _groundChecker.OnGround += SetIsGround;
         _cameraTransform = Camera.main.transform;
     }
-
-    // private void Update()
-    // {
-    //     if(_playerInput.JumpPressed()) Jump();
-    //
-    //     CalculateMovementDirection();
-    // }
 
     public void CalculateMovementDirection(Vector3 direction)
     {
@@ -50,13 +44,10 @@ public class MoveAndRotation : MonoBehaviour
         right = right.normalized;
 
         var top = Vector3.up;
-        // _direction = (forward * _playerInput.Vertical()
-        //               + right * _playerInput.Horizontal()
-        //               + top * _playerInput.Height());
         
         _direction = (forward * direction.z
                       + right * direction.x
-                      + top * direction.y);
+                      + top   * direction.y);
     }
     
     public void Jump()
@@ -74,6 +65,10 @@ public class MoveAndRotation : MonoBehaviour
         Move();
         Gravity();
         SpeedLimit();
+        if (_playerInput.IsMovementKeysOff() && _groundChecker.IsGrounded)
+        {
+            _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
+        }
     }
 
     private void Move()

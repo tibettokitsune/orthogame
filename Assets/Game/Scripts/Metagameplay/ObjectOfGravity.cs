@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(Rigidbody))]
 public class ObjectOfGravity : MonoBehaviour
 {
     [Inject] private Antigravity _antigravity;
