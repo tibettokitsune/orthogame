@@ -15,6 +15,5 @@ namespace Infrastructure
 
         public bool JumpPressed() => Input.GetKeyDown(KeyCode.Space);
         public bool AttackPressed() => Input.GetMouseButton(0);
-        public bool IsMovementKeysOff() =>!( Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D));
     }
 }

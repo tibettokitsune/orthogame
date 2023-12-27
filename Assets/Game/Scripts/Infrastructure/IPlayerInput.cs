@@ -13,6 +13,5 @@ namespace Infrastructure
         bool JumpPressed();
 
         bool AttackPressed();
-        bool IsMovementKeysOff();
     }
 }

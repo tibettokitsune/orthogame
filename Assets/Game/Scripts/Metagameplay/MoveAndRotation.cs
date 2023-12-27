@@ -65,9 +65,18 @@ public class MoveAndRotation : MonoBehaviour
         Move();
         Gravity();
         SpeedLimit();
-        if (_playerInput.IsMovementKeysOff() && _groundChecker.IsGrounded)
+        StopInetria();
+    }
+
+    void StopInetria()
+    {
+        bool isMaxInputHorizontal = Mathf.Abs(_playerInput.Horizontal()) > 0.5;
+        bool isMaxInputVertical = Mathf.Abs(_playerInput.Vertical()) > 0.5;
+        print(_playerInput.Horizontal());
+        if (!isMaxInputHorizontal && !isMaxInputVertical)
         {
-            _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
+            if (_groundChecker.IsGrounded && !_currentObjectOfGravity.InSphere)
+                _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
         }
     }
 
