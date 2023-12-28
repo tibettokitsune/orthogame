@@ -9,6 +9,7 @@ namespace Infrastructure
         public float Vertical() => Input.GetAxis("Vertical");
         public float Height() => Input.GetAxis("Height");
 
+        public bool ShiftPressed() => Input.GetKeyDown(KeyCode.LeftShift);
         public bool RPressed() => Input.GetKeyDown(KeyCode.R);
 
         public bool EPressed() => Input.GetKeyDown(KeyCode.E);

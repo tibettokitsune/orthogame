@@ -8,6 +8,8 @@ namespace Infrastructure
 
         float Height();
 
+        bool ShiftPressed();
+
         bool RPressed();
         bool EPressed();
         bool JumpPressed();

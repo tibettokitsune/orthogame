@@ -72,7 +72,7 @@ public class MoveAndRotation : MonoBehaviour
     {
         bool isMaxInputHorizontal = Mathf.Abs(_playerInput.Horizontal()) > 0.5;
         bool isMaxInputVertical = Mathf.Abs(_playerInput.Vertical()) > 0.5;
-        print(_playerInput.Horizontal());
+
         if (!isMaxInputHorizontal && !isMaxInputVertical)
         {
             if (_groundChecker.IsGrounded && !_currentObjectOfGravity.InSphere)
