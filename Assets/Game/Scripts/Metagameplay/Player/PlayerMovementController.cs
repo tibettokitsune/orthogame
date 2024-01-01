@@ -19,6 +19,11 @@ namespace Game.Scripts.Metagameplay.Player
             _fsm = new StateMachine();
             _fsm.AddState("SimpleMovement",new SimpleMovementState(_playerInput, _moveAndRotation, _animationController, _groundChecker));
             _fsm.AddState("AntigravityMovement",new AntigravityMovementState(_playerInput, _moveAndRotation, _antigravity, _animationController));
+            _fsm.AddState("DashMovement", new DashState(transform, _fsm, _playerInput, _moveAndRotation));
+
+            _fsm.AddTransition(new Transition("SimpleMovement", "DashMovement",
+                t => _playerInput.ShiftPressed()));
+            _fsm.AddTriggerTransition("DashStateExit", new Transition("DashMovement", "SimpleMovement"));
 
             _fsm.AddTransition(new Transition("SimpleMovement", "AntigravityMovement", 
                 t => _playerInput.RPressed()));

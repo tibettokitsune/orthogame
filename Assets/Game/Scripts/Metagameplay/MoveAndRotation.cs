@@ -32,8 +32,7 @@ public class MoveAndRotation : MonoBehaviour
         _groundChecker.OnGround += SetIsGround;
         _cameraTransform = Camera.main.transform;
     }
-
-    public void CalculateMovementDirection(Vector3 direction)
+    public Vector3 CalculateDirection(Vector3 direction)
     {
         var forward = _cameraTransform.forward;
         forward.y = 0;
@@ -44,10 +43,15 @@ public class MoveAndRotation : MonoBehaviour
         right = right.normalized;
 
         var top = Vector3.up;
-        
+
         _direction = (forward * direction.z
                       + right * direction.x
-                      + top   * direction.y);
+                      + top * direction.y);
+        return _direction;
+    }
+    public void CalculateMovementDirection(Vector3 direction)
+    {
+        _direction = CalculateDirection(direction);
     }
     
     public void Jump()
