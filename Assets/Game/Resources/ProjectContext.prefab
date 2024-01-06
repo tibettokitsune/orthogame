@@ -75,3 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerConfiguration: {fileID: 11400000, guid: 422532cfce5594b9facc399707ce972e, type: 2}
+  sceneConfiguration: {fileID: 11400000, guid: 06e1152ead85e4ba1b58b550d7b2e631, type: 2}

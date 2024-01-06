@@ -28,7 +28,7 @@ namespace Game.Scripts.UI
             transform.position = Camera.main.WorldToScreenPoint(_target.position);
             
             var rt = (RectTransform) transform;
-            rt.anchoredPosition += Vector2.up * Screen.height * 0.04f;
+            rt.anchoredPosition += Vector2.up * UnityEngine.Screen.height * 0.04f;
         }
     }
 }
