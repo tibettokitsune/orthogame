@@ -46,10 +46,8 @@ namespace Game.Scripts.Metagameplay.Player
 
         public override void OnExit()
         {
-            _antigravity.SetGravity();
-            
+            _antigravity.SetGravity();            
             _animationController.SetLayerWeight(CharacterAnimationLayer.Fly, 0f);
-
         }
     }
 }
