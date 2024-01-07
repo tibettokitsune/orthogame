@@ -9,6 +9,11 @@ namespace Game.Scripts.UI
     {
         [SerializeField] private CanvasGroup canvasGroup;
 
+        public virtual void Start()
+        {
+            
+        }
+
         private void OnValidate()
         {
             if (!canvasGroup) canvasGroup = GetComponent<CanvasGroup>();
