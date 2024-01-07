@@ -32,13 +32,13 @@ namespace Game.Scripts.UI
                 }
             }
 
-            float fakeTimer = 0f;
-            while (fakeTimer < 3f)
-            {
-                fakeTimer += Time.deltaTime;
-                loadingBar.fillAmount = fakeTimer / 3f;
-                yield return null;
-            }
+            // float fakeTimer = 0f;
+            // while (fakeTimer < 3f)
+            // {
+            //     fakeTimer += Time.deltaTime;
+            //     loadingBar.fillAmount = fakeTimer / 3f;
+            //     yield return null;
+            // }
             
             onComplete?.Invoke();
             Close();

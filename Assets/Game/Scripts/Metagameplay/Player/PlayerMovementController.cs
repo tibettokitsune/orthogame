@@ -17,7 +17,7 @@ namespace Game.Scripts.Metagameplay.Player
         private void Start()
         {
             _fsm = new StateMachine();
-            DashState dashState = new DashState(transform, _playerInput, _moveAndRotation);
+            DashState dashState = new DashState(transform, _playerInput, _moveAndRotation, _animationController);
             _fsm.AddState("SimpleMovement",new SimpleMovementState(_playerInput, _moveAndRotation, _animationController, _groundChecker));
             _fsm.AddState("AntigravityMovement",new AntigravityMovementState(_playerInput, _moveAndRotation, _antigravity, _animationController));
             _fsm.AddState("DashMovement", dashState);

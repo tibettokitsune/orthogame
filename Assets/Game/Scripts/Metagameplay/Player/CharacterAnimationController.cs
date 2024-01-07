@@ -17,8 +17,9 @@ namespace Game.Scripts.Metagameplay.Player
         private static readonly int OnGround = Animator.StringToHash("OnGround");
         private static readonly int CombatNumber = Animator.StringToHash("CombatNumber");
         private static readonly int Punch = Animator.StringToHash("Punch");
+        private static readonly int Dash = Animator.StringToHash("Dash");
 
-        
+
         private void OnValidate()
         {
             if (!_animator) _animator = GetComponent<Animator>();
@@ -39,6 +40,11 @@ namespace Game.Scripts.Metagameplay.Player
         public void SetLayerWeight(CharacterAnimationLayer currentLayer, float p1)
         {
             _animator.SetLayerWeight((int)currentLayer, p1);
+        }
+
+        public void DashAnimation()
+        {
+            _animator.SetTrigger(Dash);
         }
     }
 }

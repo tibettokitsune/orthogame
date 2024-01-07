@@ -1,6 +1,7 @@
 using Infrastructure;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Scripts.Metagameplay.Player;
 using UnityEngine;
 using UnityHFSM;
 using Zenject;
@@ -16,12 +17,15 @@ public class DashState : State
     private Transform _transform;
     private StateMachine _fsm;
     private MoveAndRotation _moveAndRotation;
-    public DashState(Transform transform, IPlayerInput playerInput, MoveAndRotation moveAndRotation)
+    private CharacterAnimationController _animationController;
+    public DashState(Transform transform, IPlayerInput playerInput, MoveAndRotation moveAndRotation,
+        CharacterAnimationController animationController)
     {
         _transform = transform;
         _playerInput = playerInput;
         _moveAndRotation = moveAndRotation;
         _rigidbody = _transform.GetComponent<Rigidbody>();
+        _animationController = animationController;
     }
 
     public override void OnExit()
@@ -32,6 +36,7 @@ public class DashState : State
     public override void OnEnter()
     {
         TimerDash = Time.time + 0.2f;
+        _animationController.DashAnimation();
     }
     public override void OnLogic()
     {
