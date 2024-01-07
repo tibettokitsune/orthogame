@@ -7,19 +7,18 @@ using Zenject;
 using UnityEngine.Events;
 public class DashState : State
 {
-    public IPlayerInput _playerInput;
-    public Rigidbody _rigidbody;
-    [SerializeField] private float ForceDash = 10;
-    private float DashCooldown = 0.5f;
+    private IPlayerInput _playerInput;
+    private Rigidbody _rigidbody;
+    [SerializeField] private float ForceDash = 100;
+    private float DashCooldown = 0.2f;
     private float LastTimeDash;
     private float TimerDash;
     private Transform _transform;
     private StateMachine _fsm;
     private MoveAndRotation _moveAndRotation;
-    public DashState(Transform transform, StateMachine fsm, IPlayerInput playerInput, MoveAndRotation moveAndRotation)
+    public DashState(Transform transform, IPlayerInput playerInput, MoveAndRotation moveAndRotation)
     {
         _transform = transform;
-        _fsm = fsm;
         _playerInput = playerInput;
         _moveAndRotation = moveAndRotation;
         _rigidbody = _transform.GetComponent<Rigidbody>();
@@ -36,14 +35,19 @@ public class DashState : State
     }
     public override void OnLogic()
     {
-        Debug.Log(Time.time - LastTimeDash);
-        if (Time.time - LastTimeDash < DashCooldown || TimerDash < Time.time)
-            _fsm.Trigger("DashStateExit");
-        else
+        if (!IsDashFinished())
         {
             Vector3 direction = new Vector3(_playerInput.Horizontal(), 0, _playerInput.Vertical());
             direction = _moveAndRotation.CalculateDirection(direction);
-            _rigidbody.AddForce(direction.normalized * ForceDash / _rigidbody.velocity.magnitude, ForceMode.VelocityChange);
+
+            Vector3 dash = direction * ForceDash;
+            if (_rigidbody.velocity.magnitude != 0) dash = dash / _rigidbody.velocity.magnitude;
+            _rigidbody.AddForce(direction, ForceMode.VelocityChange);
         }
+    }
+
+    public bool IsDashFinished()
+    {
+        return (Time.time - LastTimeDash < DashCooldown || TimerDash < Time.time);
     }
 }

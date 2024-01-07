@@ -11,8 +11,7 @@ using Zenject;
 public class MoveAndRotation : MonoBehaviour
 {
     public bool IsGround { set => _isGround = value; get => _isGround; }
-
-    [Inject] private IPlayerInput _playerInput;
+    public bool isMomentumStopped = false;
     [Inject] private PlayerConfiguration _configuration;
     [Inject] private GroundChecker _groundChecker;
     [Inject] private ObjectOfGravity _currentObjectOfGravity;
@@ -32,6 +31,7 @@ public class MoveAndRotation : MonoBehaviour
         _groundChecker.OnGround += SetIsGround;
         _cameraTransform = Camera.main.transform;
     }
+
     public Vector3 CalculateDirection(Vector3 direction)
     {
         var forward = _cameraTransform.forward;
@@ -72,12 +72,12 @@ public class MoveAndRotation : MonoBehaviour
         StopInetria();
     }
 
-    void StopInetria()
-    {
-        bool isMaxInputHorizontal = Mathf.Abs(_playerInput.Horizontal()) > 0.5;
-        bool isMaxInputVertical = Mathf.Abs(_playerInput.Vertical()) > 0.5;
+    void StopInetria()//float HorizontalInput, float VerticalInput)
+    {/*
+        bool isMaxInputHorizontal = Mathf.Abs(HorizontalInput) > 0.5;
+        bool isMaxInputVertical = Mathf.Abs(VerticalInput) > 0.5;*/
 
-        if (!isMaxInputHorizontal && !isMaxInputVertical)
+        if (isMomentumStopped)
         {
             if (_groundChecker.IsGrounded && !_currentObjectOfGravity.InSphere)
                 _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);

@@ -32,7 +32,10 @@ namespace Game.Scripts.Metagameplay.Player
         {
             if (TimerDash > Time.time)
             {
-                _rigidbody.AddForce(transform.forward * ForceDash / _rigidbody.velocity.magnitude, ForceMode.VelocityChange);
+                print(_rigidbody.velocity.magnitude);
+                   Vector3 dash = transform.forward * ForceDash;
+                if (_rigidbody.velocity.magnitude != 0) dash = dash / _rigidbody.velocity.magnitude;
+                _rigidbody.AddForce(dash, ForceMode.VelocityChange);
 
                 if (TimerDash < Time.time + Time.fixedDeltaTime)
                 {
